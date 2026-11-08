@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Internet Movies</title>
+    <style>
+        body {
+            background: #10101c;
+            color: white;
+            font-family: Arial;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .movie {
+            background: #252540;
+            padding: 20px;
+            margin: 15px auto;
+            border-radius: 12px;
+            max-width: 500px;
+        }
+
+        a {
+            color: #a78bfa;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎬 Internet Movies</h1>
+    <p>Public-domain and freely licensed movies</p>
+
+    {% for movie in movies %}
+    <div class="movie">
+        <h3>{{ movie.title or "Untitled Movie" }}</h3>
+        <p>Year: {{ movie.year or "Not available" }}</p>
+
+        <a href="https://archive.org/details/{{ movie.identifier }}"
+           target="_blank" rel="noopener">
+            Download Options
+        </a>
+    </div>
+    {% else %}
+    <p>No movies found.</p>
+    {% endfor %}
+
+    <p><a href="/">⬅ Back to Home</a></p>
+
+</body>
+</html>
