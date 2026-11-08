@@ -1,204 +1,172 @@
 
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telugu Movies</title>
 
-    <title>Telugu Movies | Movie & PDF Hub</title>
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    background:
+      linear-gradient(rgba(10,10,25,.85),rgba(10,10,25,.9)),
+      url("{{ url_for('static', filename='friendship-bg.jpg') }}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-            color: white;
+header {
+    text-align: center;
+    padding: 30px 15px;
+    background: #17132b;
+}
 
-            background:
-                linear-gradient(
-                    rgba(10, 10, 25, 0.75),
-                    rgba(10, 10, 25, 0.85)
-                ),
-                url("{{ url_for('static', filename='friendship-bg.jpg') }}");
+header h1 {
+    color: #c4b5fd;
+}
 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }
+.search {
+    display: block;
+    width: 90%;
+    max-width: 500px;
+    padding: 14px;
+    margin: 25px auto;
+    border-radius: 25px;
+    border: 2px solid #a78bfa;
+    font-size: 16px;
+}
 
-        header {
-            text-align: center;
-            padding: 35px 15px;
-            background: rgba(15, 15, 35, 0.8);
-            border-bottom: 2px solid #a78bfa;
-        }
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
 
-        header h1 {
-            color: #c4b5fd;
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+    gap: 22px;
+}
 
-        header p {
-            color: #e9d5ff;
-            font-size: 16px;
-        }
+.movie-card {
+    background: #252040;
+    border: 1px solid #8b5cf6;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 18px;
+    transition: .3s;
+}
 
-        .search-box {
-            text-align: center;
-            margin: 25px 15px;
-        }
+.movie-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 5px 20px #8b5cf6;
+}
 
-        .search-box input {
-            width: 90%;
-            max-width: 500px;
-            padding: 14px;
-            border-radius: 25px;
-            border: 2px solid #a78bfa;
-            outline: none;
-            font-size: 16px;
-        }
+.poster {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    background: linear-gradient(135deg,#312e81,#7e22ce);
+}
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
+.movie-card h3 {
+    color: #e9d5ff;
+    padding: 10px;
+    min-height: 55px;
+}
 
-        .movie-grid {
-            display: grid;
-            grid-template-columns:
-                repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
+.download {
+    display: inline-block;
+    padding: 11px 20px;
+    background: #16a34a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
 
-        .movie-card {
-            background: rgba(35, 30, 65, 0.9);
-            border: 1px solid #a78bfa;
-            border-radius: 15px;
-            padding: 25px 15px;
-            text-align: center;
-            transition: 0.3s;
-        }
+.download:hover {
+    background: #15803d;
+}
 
-        .movie-card:hover {
-            transform: translateY(-7px);
-            background: rgba(90, 60, 140, 0.95);
-            box-shadow: 0 5px 20px rgba(167, 139, 250, 0.3);
-        }
-
-        .movie-card h3 {
-            color: #f0abfc;
-            font-size: 19px;
-        }
-
-        .back-button {
-            display: inline-block;
-            margin: 35px 0;
-            padding: 13px 30px;
-            background: #8b5cf6;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-        }
-
-        .back-button:hover {
-            background: #6d28d9;
-        }
-
-        .no-results {
-            text-align: center;
-            color: #fca5a5;
-            margin: 25px;
-            display: none;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: rgba(10, 10, 25, 0.8);
-            color: #c4b5fd;
-        }
-    </style>
+.back {
+    display: inline-block;
+    margin: 30px;
+    padding: 12px 25px;
+    background: #8b5cf6;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🎬 Telugu Movies</h1>
-        <p>Welcome to Your Favourite Telugu Movie Collection</p>
-    </header>
+<header>
+    <h1>🎬 Telugu Movies Collection</h1>
+    <p>Explore Your Favourite Movies</p>
+</header>
 
-    <div class="search-box">
-        <input
-            type="text"
-            id="search"
-            placeholder="🔍 Search Telugu Movies..."
-            oninput="searchMovies()"
-        >
-    </div>
+<input
+    class="search"
+    id="search"
+    type="text"
+    placeholder="🔍 Search Movies..."
+    oninput="searchMovies()"
+>
 
-    <div class="container">
+<div class="container">
+    <div class="movie-grid">
 
-        <div class="movie-grid" id="movieGrid">
+        {% for movie in movies %}
 
-            {% for movie in movies %}
+        <div class="movie-card">
+            <div class="poster">🎬</div>
 
-            <div class="movie-card">
-                <h3>🎥 {{ movie }}</h3>
-            </div>
+            <h3>{{ movie }}</h3>
 
-            {% endfor %}
-
-        </div>
-
-        <div class="no-results" id="noResults">
-            No movies found!
-        </div>
-
-        <center>
-            <a href="/" class="back-button">
-                ⬅ Back to Home
+            <a href="#"
+               class="download"
+               onclick="alert('Movie file is not available yet.'); return false;">
+               ⬇ Download
             </a>
-        </center>
+        </div>
+
+        {% endfor %}
 
     </div>
 
-    <footer>
-        <p>❤️ Movie & PDF Hub | All Rights Reserved</p>
-    </footer>
+    <center>
+        <a href="/" class="back">⬅ Back to Home</a>
+    </center>
+</div>
 
-    <script>
-        function searchMovies() {
-            let input = document
-                .getElementById("search")
-                .value.toLowerCase();
+<script>
+function searchMovies() {
+    let value = document.getElementById("search").value.toLowerCase();
 
-            let cards = document.querySelectorAll(".movie-card");
-            let count = 0;
-
-            cards.forEach(function(card) {
-                let name = card.innerText.toLowerCase();
-
-                if (name.includes(input)) {
-                    card.style.display = "block";
-                    count++;
-                } else {
-                    card.style.display = "none";
-                }
-            });
-
-            document.getElementById("noResults").style.display =
-                count === 0 ? "block" : "none";
-        }
-    </script>
+    document.querySelectorAll(".movie-card").forEach(card => {
+        card.style.display =
+            card.innerText.toLowerCase().includes(value)
+            ? "block" : "none";
+    });
+}
+</script>
 
 </body>
 </html>
+```
